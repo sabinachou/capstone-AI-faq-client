@@ -6,7 +6,6 @@ A modern, intelligent FAQ system powered by OpenAI GPT that provides smart answe
 ![Flask](https://img.shields.io/badge/Flask-3.0.0-green.svg)
 ![React](https://img.shields.io/badge/React-18.0+-61DAFB.svg)
 ![OpenAI](https://img.shields.io/badge/OpenAI-GPT--3.5-orange.svg)
-![License](https://img.shields.io/badge/License-MIT-yellow.svg)
 
 ## Features
 
