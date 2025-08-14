@@ -19,8 +19,6 @@ class AIService:
     def __init__(self):
         # Set OpenAI API key
         self.openai_api_key = os.getenv('OPENAI_API_KEY')
-        if self.openai_api_key:
-            openai.api_key = self.openai_api_key
         
         # Initialize TF-IDF vectorizer for semantic similarity calculation
         self.vectorizer = TfidfVectorizer(
@@ -148,15 +146,20 @@ Answer requirements:
             
             user_prompt = f"User question: {user_question}{context}"
             
-            response = openai.ChatCompletion.create(
+            # Use new OpenAI API syntax while keeping the required configuration
+            client = openai.OpenAI(
+                api_key=self.openai_api_key,
+                base_url="https://api.chatanywhere.tech/v1"
+            )
+            
+            response = client.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=[
                     {"role": "system", "content": system_prompt},
                     {"role": "user", "content": user_prompt}
                 ],
                 max_tokens=500,
-                temperature=0.7,
-                api_base="https://api.chatanywhere.org/v1"
+                temperature=0.7
             )
             
             return response.choices[0].message.content.strip()

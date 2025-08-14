@@ -10,8 +10,8 @@ db = SQLAlchemy()
 class FAQ(db.Model):
     __tablename__ = 'faqs'
     id = db.Column(db.Integer, primary_key=True)
-    question = db.Column(db.String(255), nullable=False)
-    answer = db.Column(db.String(255), nullable=False)
+    question = db.Column(db.Text, nullable=False)
+    answer = db.Column(db.Text, nullable=False)
 
     def to_dict(self):
         return {
@@ -22,8 +22,8 @@ class FAQ(db.Model):
 
 class Log(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    question = db.Column(db.String(255), nullable=False)
-    keywords = db.Column(db.String(255), nullable=True)  # Store extracted keywords
+    question = db.Column(db.Text, nullable=False)
+    keywords = db.Column(db.Text, nullable=True)  # Store extracted keywords
     category = db.Column(db.String(100), nullable=True)  # Store question category
     session_id = db.Column(db.String(255), nullable=True)  # Session ID
     is_session_end = db.Column(db.Boolean, default=False)  # Whether it's a session end marker
@@ -31,7 +31,7 @@ class Log(db.Model):
 
 class ConversationSession(db.Model):
     __tablename__ = 'conversation_sessions'
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     session_id = db.Column(db.String(255), unique=True, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
     start_time = db.Column(db.DateTime, default=datetime.utcnow)

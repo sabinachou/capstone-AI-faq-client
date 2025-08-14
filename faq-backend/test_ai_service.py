@@ -9,6 +9,7 @@ from ai_service import AIService
 from models import FAQ
 from app import app
 import json
+import openai
 
 def test_ai_service():
     """Test various functions of AI service"""
@@ -153,13 +154,20 @@ def check_dependencies():
             print(f"❌ {package} - Not installed")
             print(f"   Please run: pip install {package}")
     
-    # Check OpenAI API key
-    api_key = os.getenv('OPENAI_API_KEY')
-    if api_key:
-        print(f"✅ OpenAI API Key - Configured")
-    else:
-        print(f"⚠️  OpenAI API Key - Not configured")
-        print(f"   Please set OPENAI_API_KEY in .env file")
+    # Set API key for testing
+    api_key = 'sk-4TMyDTGXFc6xoMQiWhkkAUgoPLJqWoAZUSpNGhdPdUftcFiF'
+    
+    # 测试新版本OpenAI API
+    try:
+        client = openai.OpenAI(api_key=api_key)
+        response = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[{"role": "user", "content": "Hello"}],
+            max_tokens=10
+        )
+        print(f"✅ OpenAI API Key - Working (New API)")
+    except Exception as e:
+        print(f"❌ OpenAI API Key - Error: {e}")
 
 if __name__ == '__main__':
     print("AI Intelligent Customer Service System Test Suite")
