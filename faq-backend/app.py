@@ -614,14 +614,8 @@ def health_check():
             'azure_deployment': app.config.get('AZURE_DEPLOYMENT', False)
         }), 503
 
-if __name__ == '__main__':
-    # For production deployment, use proper WSGI server
-    # Azure App Service will set PORT environment variable
-    port = int(os.environ.get('PORT', 5000))
-    host = '0.0.0.0' if app.config.get('AZURE_APP_SERVICE') else '127.0.0.1'
-    
-    logger.info(f"Starting Flask app on {host}:{port}")
-    logger.info(f"Environment: {app.config.get('FLASK_ENV', 'unknown')}")
-    logger.info(f"Azure deployment: {app.config.get('AZURE_DEPLOYMENT', False)}")
-    
-    app.run(debug=app.config.get('DEBUG', False), host=host, port=port)
+if __name__ == "__main__":
+    import os
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=False)
+
